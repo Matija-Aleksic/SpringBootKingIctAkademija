@@ -40,4 +40,6 @@ public class TestConroller {
                 .ok()
                 .body(testDto);
     }
+
+   // http://localhost:8082/demoAppTest/swagger-ui/index.html
  }
