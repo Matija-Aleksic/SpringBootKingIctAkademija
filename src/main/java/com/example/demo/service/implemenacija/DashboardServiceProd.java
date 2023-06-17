@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Profile;
 public class DashboardServiceProd implements DashboardService {
     @Override
     public String getDashboard() {
-        return "dashboardProd.html";
+        return "dashboardProd";
     }
 }
