@@ -119,7 +119,7 @@ public class FlightSearchEntity2 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FlightSearchEntity that = (FlightSearchEntity) o;
+        FlightSearchEntity2 that = (FlightSearchEntity2) o;
         return Objects.equals(id, that.id);
     }
 

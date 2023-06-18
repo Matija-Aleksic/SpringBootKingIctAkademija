@@ -8,8 +8,10 @@ import com.amadeus.resources.FlightOfferSearch;
 import com.amadeus.resources.Location;
 import com.example.demo.dto.FlightsSearchResultDto;
 import com.example.demo.mapper.FlightOfferSearchFlightSearchResultMapper;
+import com.example.demo.mapper.FlightSearchResultDtoFlightSearchResultEntityMapper;
 import com.example.demo.model.FlightSearchEntity2;
 import com.example.demo.repository.FlightSearchEntityRepo;
+import com.example.demo.repository.FlightSearchResultEntityRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +25,32 @@ import java.util.List;
 @Service
 public class AmadeusService {
     @Autowired
-            private FlightSearchEntityRepo flightSearchEntityRepo;
+    private FlightSearchEntityRepo flightSearchEntityRepo;
     Logger logger = LoggerFactory.getLogger(AmadeusService.class);
     @Autowired
-    private FlightOfferSearchFlightSearchResultMapper flightOfferSearchFlightSearchResultMapper= new FlightOfferSearchFlightSearchResultMapper();
+    private FlightOfferSearchFlightSearchResultMapper flightOfferSearchFlightSearchResultMapper = new FlightOfferSearchFlightSearchResultMapper();
     @Autowired
     private Amadeus amadeus;
+    @Autowired
+    private FlightSearchResultEntityRepo flightSearchResultEntityRepo;
+    @Autowired
+    private FlightSearchResultDtoFlightSearchResultEntityMapper flightSearchResultDtoFlightSearchResultEntityMapper;
+
+
     public List<Location> searchAiports(String keyword) {
         try {
 
             Params params = Params.with("subType", Locations.AIRPORT)
-                    .and("keyword",keyword);
+                    .and("keyword", keyword);
             return Arrays.asList(amadeus.referenceData.locations
-                         .get(params));
+                    .get(params));
         } catch (ResponseException e) {
             logger.error("error with airport search", e);
             return Collections.emptyList();
         }
     }
-    public List<FlightsSearchResultDto> searchFlights(String originLocationCode, String destinationLocationCode, LocalDate departureDate, LocalDate returnDate, Integer adults ){
+
+    public List<FlightsSearchResultDto> searchFlights(String originLocationCode, String destinationLocationCode, LocalDate departureDate, LocalDate returnDate, Integer adults) {
         try {
 
             FlightSearchEntity2 flightSearchEntity2 = new FlightSearchEntity2();
@@ -63,20 +72,25 @@ public class AmadeusService {
                     .and("departureDate", departureDate.toString())
                     .and("returnDate", returnDate)
                     .and("adults", adults)
-                    .and("nonStop",true)
-                    .and("max",5);
+                    .and("nonStop", true)
+                    .and("max", 5);
 
-            if (returnDate!=null){
-                params.and("returnDate",returnDate.toString());
+            if (returnDate != null) {
+                params.and("returnDate", returnDate.toString());
             }
 
-            List<FlightOfferSearch>flightOfferSearches= Arrays.asList(amadeus.shopping.flightOffersSearch.get(params));
-            List<FlightsSearchResultDto> flightsSearchResultDtos=flightOfferSearches.stream()
+            List<FlightOfferSearch> flightOfferSearches = Arrays.asList(amadeus.shopping.flightOffersSearch.get(params));
+            List<FlightsSearchResultDto> flightsSearchResultDtos = flightOfferSearches.stream()
                     .map(flightOfferSearch -> flightOfferSearchFlightSearchResultMapper
                             .map(flightOfferSearch)).toList();
+            flightsSearchResultDtos.stream()
+                    .map(flightsSearchResultDto -> flightSearchResultDtoFlightSearchResultEntityMapper.map(flightsSearchResultDto))
+                            .forEach(flightSearchResultEntity -> flightSearchResultEntityRepo.save(flightSearchResultEntity));
             return flightsSearchResultDtos;
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Search flight error", e);
-            return Collections.emptyList(); }
+            return Collections.emptyList();
+        }
+
     }
 }
