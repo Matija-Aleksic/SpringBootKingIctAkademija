@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/flightSearch")
-public class FlightSearchController {
+public class AirportSearchController {
     @Autowired
     private LocationLocationDtoMapper locationLocationDtoMapper;
     @Autowired
