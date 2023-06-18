@@ -41,9 +41,12 @@ public class AmadeusService {
             Params params = Params
                     .with("originLocationCode", originLocationCode)
                     .and("destinationLocationCode", destinationLocationCode)
-                    .and("departureDate", departureDate)
+                    .and("departureDate", departureDate.toString())
                     .and("returnDate", returnDate)
                     .and("adults", adults);
+            if (returnDate!=null){
+                params.and("returnDate",returnDate.toString());
+            }
 
             List<FlightOfferSearch>flightOfferSearches= Arrays.asList(amadeus.shopping.flightOffersSearch.get(params));
             List<FlightsSearchResultDto> flightsSearchResultDtos=flightOfferSearches.stream()
