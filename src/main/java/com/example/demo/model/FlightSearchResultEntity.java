@@ -124,24 +124,11 @@ public class FlightSearchResultEntity {
         this.price = price;
     }
 
-    public FlightSearchEntity2 getFlightSearchEntity2(){
+    public FlightSearchEntity2 getFlightSearchEntity2() {
         return flightSearchEntity2;
     }
 
     public void setFlightSearchEntity2(FlightSearchEntity2 flightSearchEntity2) {
         this.flightSearchEntity2 = flightSearchEntity2;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FlightSearchResultEntity that = (FlightSearchResultEntity) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

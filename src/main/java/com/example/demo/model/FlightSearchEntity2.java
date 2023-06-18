@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pretrage_letova")
-public class FlightSearchEntity2 {
+public class FlightSearchEntity2 extends BasicEntity {
 
     @Column(name = "id")
     @Id
@@ -28,20 +28,13 @@ public class FlightSearchEntity2 {
     private Integer adults;
     @OneToMany(mappedBy = "flightSearchEntity2")
     private List<FlightSearchResultEntity> flightSearchResultEntities;
-    @Column(name = "datum_kreiranja")
-    private LocalDate dateCreated;
-    @Column(name = "korisnik_kreiranja")
-    private String userCreated;
-    @Column(name = "datum_azuriranja")
-    private LocalDate dateUpdated;
-    @Column(name = "korisnik_azuriranja")
-    private String userUpdated;
 
-
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -86,56 +79,11 @@ public class FlightSearchEntity2 {
         this.adults = adults;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public String getUserCreated() {
-        return userCreated;
-    }
-
-    public void setUserCreated(String userCreated) {
-        this.userCreated = userCreated;
-    }
-
-    public LocalDate getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(LocalDate dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    public String getUserUpdated() {
-        return userUpdated;
-    }
-
-    public void setUserUpdated(String userUpdated) {
-        this.userUpdated = userUpdated;
-    }
-
     public List<FlightSearchResultEntity> getFlightSearchResultEntities() {
         return flightSearchResultEntities;
     }
 
     public void setFlightSearchResultEntities(List<FlightSearchResultEntity> flightSearchResultEntities) {
         this.flightSearchResultEntities = flightSearchResultEntities;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FlightSearchEntity2 that = (FlightSearchEntity2) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
