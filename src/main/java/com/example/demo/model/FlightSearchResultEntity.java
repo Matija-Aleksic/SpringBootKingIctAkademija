@@ -32,6 +32,9 @@ public class FlightSearchResultEntity {
     private String carrier;
     @Column(name = "cijena")
     private String price;
+    @ManyToOne
+    @JoinColumn(name = "id_pretrage")
+    private FlightSearchEntity2 flightSearchEntity2;
 
     public Integer getId() {
         return id;
@@ -119,6 +122,14 @@ public class FlightSearchResultEntity {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public FlightSearchEntity2 getFlightSearchEntity2(){
+        return flightSearchEntity2;
+    }
+
+    public void setFlightSearchEntity2(FlightSearchEntity2 flightSearchEntity2) {
+        this.flightSearchEntity2 = flightSearchEntity2;
     }
 
     @Override

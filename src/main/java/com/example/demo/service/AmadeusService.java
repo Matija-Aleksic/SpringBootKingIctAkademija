@@ -83,9 +83,16 @@ public class AmadeusService {
             List<FlightsSearchResultDto> flightsSearchResultDtos = flightOfferSearches.stream()
                     .map(flightOfferSearch -> flightOfferSearchFlightSearchResultMapper
                             .map(flightOfferSearch)).toList();
+
             flightsSearchResultDtos.stream()
                     .map(flightsSearchResultDto -> flightSearchResultDtoFlightSearchResultEntityMapper.map(flightsSearchResultDto))
-                            .forEach(flightSearchResultEntity -> flightSearchResultEntityRepo.save(flightSearchResultEntity));
+                            .forEach(flightSearchResultEntity ->
+                            {
+                                flightSearchResultEntity.setFlightSearchEntity2(flightSearchEntity2);
+                                flightSearchResultEntityRepo.save(flightSearchResultEntity);
+                            });
+
+
             return flightsSearchResultDtos;
         } catch (Exception e) {
             logger.error("Search flight error", e);

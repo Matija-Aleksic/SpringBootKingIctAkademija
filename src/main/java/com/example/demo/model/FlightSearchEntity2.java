@@ -4,6 +4,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,8 @@ public class FlightSearchEntity2 {
     private LocalDate returnDate;
     @Column(name = "broj_odraslih")
     private Integer adults;
+    @OneToMany(mappedBy = "flightSearchEntity2")
+    private List<FlightSearchResultEntity> flightSearchResultEntities;
     @Column(name = "datum_kreiranja")
     private LocalDate dateCreated;
     @Column(name = "korisnik_kreiranja")
@@ -113,6 +116,14 @@ public class FlightSearchEntity2 {
 
     public void setUserUpdated(String userUpdated) {
         this.userUpdated = userUpdated;
+    }
+
+    public List<FlightSearchResultEntity> getFlightSearchResultEntities() {
+        return flightSearchResultEntities;
+    }
+
+    public void setFlightSearchResultEntities(List<FlightSearchResultEntity> flightSearchResultEntities) {
+        this.flightSearchResultEntities = flightSearchResultEntities;
     }
 
     @Override

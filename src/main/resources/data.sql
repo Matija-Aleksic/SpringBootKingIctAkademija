@@ -40,5 +40,7 @@ CREATE TABLE Putovanja
     datum_kreiranja                    date,
     korisnik_kreiranja                 varchar(50),
     datum_azuriranja                   date,
-    korisnik_azuriranja                varchar(50)
+    korisnik_azuriranja                varchar(50),
+    id_pretrage                        int
 );
+alter table Putovanja add foreign key (id_pretrage)references pretrage_letova(id);
