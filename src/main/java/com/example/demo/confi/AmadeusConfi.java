@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class AmadeusConfi {
     @Bean
     public Amadeus getAmadeus(){
-        return Amadeus.builder("test","test2").build();
+        return Amadeus.builder("RuRNwWDrX0F4G3nLKVGDGEZiOPGoIlew","jOHSRFlXPsGwDFyz").build();
     }
 }
